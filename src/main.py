@@ -6,21 +6,25 @@ def sub_cb(topic, msg):
   global topic_sub
   print((topic, msg))
   print(topic_sub)
-  if topic == topic_sub and msg == b'f':
-    print('ESP received, forward')
-    robot.passoFrente() 
-  if topic == topic_sub and msg == b'p':
-    print('ESP received, stop')
-    robot.parar()  
-  if topic == topic_sub and msg == b'e':
-    print('ESP received,  turn left')
-    robot.passoEsquerda()
-  if topic == topic_sub and msg == b'd':
-    print('ESP received, turn right')
-    robot.passoDireita()
-  if topic == topic_sub and msg == b't':
-    print('ESP received, backward')
-    robot.passoRe() 
+  if len(msg == 3):
+    if topic == topic_sub and msg == b'FRT':
+      print('ESP received, forward')
+      robot.passoFrente() 
+    if topic == topic_sub and msg == b'PAR':
+      print('ESP received, stop')
+      robot.parar()  
+    if topic == topic_sub and msg == b'ESQ':
+      print('ESP received,  turn left')
+      robot.passoEsquerda()
+    if topic == topic_sub and msg == b'DIR':
+      print('ESP received, turn right')
+      robot.passoDireita()
+    if topic == topic_sub and msg == b'TRS':
+      print('ESP received, backward')
+      robot.passoRe() 
+  if len(msg) > 3:
+    print("Execute program!")
+
 
 def connect_and_subscribe():
   global client_id, mqtt_server, topic_sub, server_port, mqtt_user, mqtt_password
