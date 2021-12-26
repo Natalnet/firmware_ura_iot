@@ -1,6 +1,9 @@
+
+# Control Robot State 
+from ControlState import ControlState
+stateController = ControlState() 
+
 # Complete project details at https://RandomNerdTutorials.com
-
-
 from umqttsimple import MQTTClient
 import ubinascii
 import machine
@@ -37,8 +40,8 @@ mqtt_user = conf["mqtt_user"]
 mqtt_password = conf["mqtt_password"]
 
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = b'URA001/input'
-topic_pub = b'URA001/output'
+topic_sub = b'URA002/input'
+topic_pub = b'URA002/output'
 
 last_message = 0
 message_interval = 1

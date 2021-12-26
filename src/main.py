@@ -24,6 +24,11 @@ def sub_cb(topic, msg):
       robot.passoRe() 
   if len(msg) > 3:
     print("Execute program!")
+    print( type(msg) ) 
+    # convert to string 
+    data = msg.decode('utf-8')
+    print(type(data))
+    stateController.executePrograma(data)  
 
 
 def connect_and_subscribe():
@@ -48,11 +53,14 @@ except OSError as e:
 while True:
   try:
     client.check_msg()
-    if (time.time() - last_message) > message_interval:
+    stateController.updateExecution() 
+    if (time.time() - last_message) >= message_interval:
+      stateController.showState() 
       distance = distSensor.distance_cm()
       leftValue = leftLineSensor.value()
       rightValue = rightLineSensor.value()
-      msg = b'MSG %d %d %d %d' % (counter,distance,leftValue,rightValue) 
+      currentState = stateController.getCurrentState() 
+      msg = b'MSG %d %d %d %d %s' % (counter,distance,leftValue,rightValue,currentState) 
       client.publish(topic_pub, msg)
       last_message = time.time()
       counter += 1
