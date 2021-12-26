@@ -1,4 +1,4 @@
-# Complete project details at https://RandomNerdTutorials.com
+# Reference to MQTT codes: https://RandomNerdTutorials.com
 
 
 
@@ -6,7 +6,7 @@ def sub_cb(topic, msg):
   global topic_sub
   print((topic, msg))
   print(topic_sub)
-  if len(msg == 3):
+  if len(msg) == 3:
     if topic == topic_sub and msg == b'FRT':
       print('ESP received, forward')
       robot.passoFrente() 
