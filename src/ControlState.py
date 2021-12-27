@@ -41,6 +41,7 @@ class ControlState:
             else:
                 self.instructionIndex = 0 
                 self.state = 'FIM' 
+                self.robotControl.executaComando('PAR')
                 self.endExecution = True  
 
 
