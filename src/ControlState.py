@@ -1,19 +1,20 @@
 import time
 class ControlState:
     kind = 'ControlState'
-    def __init__(self):
+    def __init__(self, rb):
         print("Control state started!")
         self.startTime = 0
-        self.finalTime = 0 
+        self.deltaTime = 0 
         self.state = 'PAR'
         self.defaultDelta = 500 
         self.instructionIndex = 0 
         self.instructions = [] 
         self.endExecution = False 
+        self.robotControl = rb 
 
     def initTimer(self, dt, st):
         self.startTime = time.ticks_ms()
-        self.finalTime = dt 
+        self.deltaTime = dt 
         self.state = st 
 
     def executePrograma(self, code):
@@ -21,6 +22,7 @@ class ControlState:
         self.endExecution = False 
         print(self.instructions) 
         self.initTimer(self.defaultDelta, self.instructions[0])
+        self.robotControl.executaComando(self.instructions[0])
         self.showState() 
 
     def updateExecution(self): 
@@ -30,7 +32,8 @@ class ControlState:
             if self.instructionIndex < len(self.instructions):
                 # atualiza a instrução atual 
                 self.initTimer(self.defaultDelta, self.instructions[self.instructionIndex])
-                print("Atualizou: ",self.instructions[self.instructionIndex])
+                #print("Atualizou: ",self.instructions[self.instructionIndex])
+                self.robotControl.executaComando(self.instructions[self.instructionIndex])
             else:
                 self.instructionIndex = 0 
                 self.state = 'FIM' 
@@ -38,14 +41,14 @@ class ControlState:
 
 
     def updateTimer(self): 
-        if ( time.ticks_diff(  time.ticks_ms(), self.startTime) < self.finalTime ):
+        if ( time.ticks_diff(  time.ticks_ms(), self.startTime) < self.deltaTime ):
             return False 
         else: 
             #self.state = 'PAR'
             return True 
     
     def showState(self):
-        print(time.ticks_ms(), self.startTime, self.finalTime, self.state, self.instructionIndex) 
+        print(time.ticks_ms(), self.startTime, self.deltaTime, self.state, self.instructionIndex) 
 
     def getCurrentState(self):
         return self.state

@@ -1,7 +1,5 @@
 
-# Control Robot State 
-from ControlState import ControlState
-stateController = ControlState() 
+
 
 # Complete project details at https://RandomNerdTutorials.com
 from umqttsimple import MQTTClient
@@ -20,6 +18,11 @@ conf_file = open('conf.json')
 conf = json.load(conf_file) 
 conf_file.close() 
 
+dtTimeConfFile = open('dt_time.json')
+dtTimeConf = json.load(dtTimeConfFile)
+dtTimeConfFile.close() 
+
+
 # Robot codes 
 from L9110URA import L9110URA
 robot = L9110URA(13,12,5,23)
@@ -31,6 +34,10 @@ distSensor = HCSR04(trigger_pin=19, echo_pin=18)
 leftLineSensor =  machine.Pin(14, machine.Pin.IN,  machine.Pin.PULL_UP)
 rightLineSensor =  machine.Pin(27, machine.Pin.IN,  machine.Pin.PULL_UP)
 
+
+# Control Robot State 
+from ControlState import ControlState
+stateController = ControlState(robot) 
 
 ssid = conf["ssid"]
 password = conf["password"]

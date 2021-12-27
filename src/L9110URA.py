@@ -61,3 +61,16 @@ class L9110URA(MotorDC):
         time.sleep_ms(150)
         self.configura(0,0,0,0) # parar
 
+    def executaComando(self, cmd ):
+        if cmd == 'FRT':
+            self.configura(1,0,1,0)
+            #print(cmd) 
+        elif cmd == 'TRS':
+            self.configura(0,1000,0,1000)
+        elif cmd == 'DIR':
+            self.configura(1,0,0,1000)
+        elif cmd == 'ESQ':
+            self.configura(0,1000,1,0) 
+        elif cmd == 'PAR':
+            self.configura(0,0,0,0)
+
