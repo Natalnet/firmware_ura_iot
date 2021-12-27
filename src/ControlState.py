@@ -1,7 +1,7 @@
 import time
 class ControlState:
     kind = 'ControlState'
-    def __init__(self, rb):
+    def __init__(self, rb, dt):
         print("Control state started!")
         self.startTime = 0
         self.deltaTime = 0 
@@ -11,6 +11,9 @@ class ControlState:
         self.instructions = [] 
         self.endExecution = False 
         self.robotControl = rb 
+        # Este atributo guarda um dicionário relacionando nome do comando com 
+        # o tempo para a sua execução 
+        self.deltaTimeConf = dt 
 
     def initTimer(self, dt, st):
         self.startTime = time.ticks_ms()
@@ -31,9 +34,10 @@ class ControlState:
             self.instructionIndex += 1 
             if self.instructionIndex < len(self.instructions):
                 # atualiza a instrução atual 
-                self.initTimer(self.defaultDelta, self.instructions[self.instructionIndex])
+                self.initTimer(self.deltaTimeConf[self.instructions[self.instructionIndex]], self.instructions[self.instructionIndex])
                 #print("Atualizou: ",self.instructions[self.instructionIndex])
                 self.robotControl.executaComando(self.instructions[self.instructionIndex])
+                #print( self.deltaTimeConf[self.instructions[self.instructionIndex]] )
             else:
                 self.instructionIndex = 0 
                 self.state = 'FIM' 

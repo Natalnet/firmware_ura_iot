@@ -37,7 +37,7 @@ rightLineSensor =  machine.Pin(27, machine.Pin.IN,  machine.Pin.PULL_UP)
 
 # Control Robot State 
 from ControlState import ControlState
-stateController = ControlState(robot) 
+stateController = ControlState(robot,dtTimeConf) 
 
 ssid = conf["ssid"]
 password = conf["password"]
