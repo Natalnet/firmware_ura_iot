@@ -26,6 +26,8 @@ Por exemplo:
 | Echo  | D18 |
 | Vcc | 3.3v | 
 
+### Sensores de Linha 
+
 | Sensor de Linha Esquerdo | ESP32 |
 | --------------- | --------------- | 
 | G  | GND  | 
