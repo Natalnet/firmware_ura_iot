@@ -9,4 +9,8 @@
 * TRS: anda para trás 
 
 ## Programação 
+A programação é realizada com uma sequência de comandos separados por ponto e vírgula ";"
+
+Por exemplo: 
+* TRS;ESQ;FRT;ESQ;FRT;ESQ;FRT;ESQ;FRT;PAR
 
