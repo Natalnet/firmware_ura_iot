@@ -10,16 +10,16 @@ def sub_cb(topic, msg):
     if topic == topic_sub and msg == b'FRT':
       print('ESP received, forward')
       robot.passoFrente() 
-    if topic == topic_sub and msg == b'PAR':
+    elif topic == topic_sub and msg == b'PAR':
       print('ESP received, stop')
       robot.parar()  
-    if topic == topic_sub and msg == b'ESQ':
+    elif topic == topic_sub and msg == b'ESQ':
       print('ESP received,  turn left')
       robot.passoEsquerda()
-    if topic == topic_sub and msg == b'DIR':
+    elif topic == topic_sub and msg == b'DIR':
       print('ESP received, turn right')
       robot.passoDireita()
-    if topic == topic_sub and msg == b'TRS':
+    elif topic == topic_sub and msg == b'TRS':
       print('ESP received, backward')
       robot.passoRe() 
   if len(msg) > 3:
