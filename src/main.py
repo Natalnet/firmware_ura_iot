@@ -8,28 +8,50 @@ def sub_cb(topic, msg):
   print(topic_sub)
   if len(msg) == 3:
     if topic == topic_sub and msg == b'FRT':
-      print('ESP received, forward')
+      print('Robô recebeu novo comando, frente')
       robot.passoFrente() 
     elif topic == topic_sub and msg == b'PAR':
-      print('ESP received, stop')
+      print('Robô recebeu novo comando, parar')
       robot.parar()  
     elif topic == topic_sub and msg == b'ESQ':
-      print('ESP received,  turn left')
+      print('Robô recebeu novo comando, esquerda')
       robot.passoEsquerda()
     elif topic == topic_sub and msg == b'DIR':
-      print('ESP received, turn right')
+      print('Robô recebeu novo comando, direita')
       robot.passoDireita()
     elif topic == topic_sub and msg == b'TRS':
-      print('ESP received, backward')
+      print('Robô recebeu novo comando, ré')
       robot.passoRe() 
   if len(msg) > 3:
-    print( type(msg) ) 
+
     # convert to string 
-    data = msg.decode('utf-8')
-    print(type(data))
-    commands = data.split(';')
-    print("Execute program!")
-    stateController.executePrograma(commands)  
+    dados = msg.decode('utf-8')
+
+    coamandos = dados.split(';')
+    if (coamandos[0] == 'PRG'):
+      #PRG;TRS;ESQ;FRT;ESQ;FRT;ESQ;FRT;ESQ;FRT;PAR 
+      print("Execute program!")
+      coamandos.pop(0)
+      print(coamandos) 
+      stateController.executePrograma(coamandos) 
+    else: 
+      comando = coamandos[0].split(" ")
+      print(comando) 
+      if (comando[0] == 'FTT'):
+        print('Robô recebeu novo comando, frente por ',int(comando[1]),' ms') 
+        robot.passoFrente(int(comando[1]))
+      elif (comando[0] == 'EST'):
+        print('Robô recebeu novo comando, esquerda por ',int(comando[1]),' ms')
+        robot.passoEsquerda(int(comando[1]))
+      elif (comando[0] == 'DRT'):
+        print('Robô recebeu novo comando, direita por ',int(comando[1]),' ms')
+        robot.passoDireita(int(comando[1]))
+      elif (comando[0] == 'TRT'):
+        print('Robô recebeu novo comando, ré por ',int(comando[1]),' ms')
+        robot.passoRe(int(comando[1]))
+
+
+
 
 
 def connect_and_subscribe():

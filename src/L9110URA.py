@@ -14,8 +14,11 @@ import time
 class L9110URA(MotorDC): 
     def __init__ (self, pinVelE,pinDirE,pinVelD,pinDirD):
         self.name = 'L9110URA'
+        self.parametro1 = 0 
+        self.parametro2 = 0 
         self.velocidadeReferenciaDir = 1000 
         self.velocidadeReferenciaEsq = 1000 
+        self.cmdTempoMaximo = 5000 # tempo máximo que um comando deve ser executado 
         self.motorEsquerdo = MotorDC(pinVelE,pinDirE)
         self.motorDireito = MotorDC(pinVelD,pinDirD)
         self.configura(0,0,0,0) # parar
@@ -45,27 +48,31 @@ class L9110URA(MotorDC):
         self.motorDireito.sentido(sB)
         self.motorDireito.velocidade(vB)
 
-    def passoFrente(self):
+    # Faz o robô entrar em modo sleep durante um tempo e depois envia o comando de parar os motores 
+    def contaTempo(self, _t):        
+        if ( _t > self.cmdTempoMaximo ):
+            time.sleep_ms(self.cmdTempoMaximo)
+        else:      
+            time.sleep_ms(_t)
+        self.configura(0,0,0,0) # parar
+
+    def passoFrente(self, tempo = 300):
         self.configura(1,0,1,0)
-        time.sleep_ms(300)
-        self.configura(0,0,0,0) # parar
+        self.contaTempo(tempo) 
     
-    def passoRe(self):
-        self.configura(0,1000,0,1000)
-        time.sleep_ms(300)
-        self.configura(0,0,0,0) # parar
+    def passoRe(self, tempo = 300):
+        self.configura(0,self.velocidadeReferenciaEsq,0,self.velocidadeReferenciaDir)
+        self.contaTempo(tempo) 
 
-    def passoEsquerda(self):
+    def passoEsquerda(self, tempo = 150):
         self.configura(0,self.velocidadeReferenciaEsq,1,0) 
-        time.sleep_ms(150)
-        self.configura(0,0,0,0) # parar
+        self.contaTempo(tempo) 
 
-    def passoDireita(self):
+    def passoDireita(self, tempo = 150):
         self.configura(1,0,0,self.velocidadeReferenciaDir) 
-        time.sleep_ms(150)
-        self.configura(0,0,0,0) # parar
+        self.contaTempo(tempo) 
 
-    def executaComando(self, cmd ):
+    def executaComando(self, cmd):
         if cmd == 'FRT':
             self.configura(1,1000-self.velocidadeReferenciaEsq,1,1000-self.velocidadeReferenciaDir)
             #print(cmd) 
