@@ -23,12 +23,13 @@ def sub_cb(topic, msg):
       print('ESP received, backward')
       robot.passoRe() 
   if len(msg) > 3:
-    print("Execute program!")
     print( type(msg) ) 
     # convert to string 
     data = msg.decode('utf-8')
     print(type(data))
-    stateController.executePrograma(data)  
+    commands = data.split(';')
+    print("Execute program!")
+    stateController.executePrograma(commands)  
 
 
 def connect_and_subscribe():

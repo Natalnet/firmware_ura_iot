@@ -20,8 +20,8 @@ class ControlState:
         self.deltaTime = dt 
         self.state = st 
 
-    def executePrograma(self, code):
-        self.instructions = code.split(';')
+    def executePrograma(self, codes):
+        self.instructions = codes
         self.endExecution = False 
         print(self.instructions) 
         self.initTimer(self.defaultDelta, self.instructions[0])
