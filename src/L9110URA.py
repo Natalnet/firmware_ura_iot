@@ -86,14 +86,14 @@ class L9110URA(MotorDC):
         self.contaTempo(tempo) 
 
     def executaComando(self, cmd):
-        if cmd == 'FRT':
+        if cmd == 'FRT' or cmd == 'FTT':
             self.configura(1,1000-self.velocidadeReferenciaEsq,1,1000-self.velocidadeReferenciaDir)
             #print(cmd) 
-        elif cmd == 'TRS':
+        elif cmd == 'TRS' or cmd == 'TRT':
             self.configura(0,self.velocidadeReferenciaEsq,0,self.velocidadeReferenciaDir)
-        elif cmd == 'DIR':
+        elif cmd == 'DIR' or cmd == 'DRT':
             self.configura(1,0,0,self.velocidadeReferenciaDir)
-        elif cmd == 'ESQ':
+        elif cmd == 'ESQ' or cmd == 'EST':
             self.configura(0,self.velocidadeReferenciaEsq,1,0) 
         elif cmd == 'PAR':
             self.configura(0,0,0,0)

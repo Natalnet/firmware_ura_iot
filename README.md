@@ -11,7 +11,7 @@
 * EST: vira para esquerda em torno do próprio eixo durante o tempo informado  
 * DRT: vira para direita em torno do próprio eixo durante o tempo informado 
 * TRT: anda para trás durante o tempo informado 
-* MTP: ajusta a 'potência' para cada motor com valores entre -100 à 100 
+* MTP: ajusta a 'potência' para cada motor com valores entre -100 à 100. No modo programação este comando precisa da especificação do tempo para concluir 
 
 ## Programação 
 A programação é realizada com uma sequência de comandos separados por ponto e vírgula ";". Para identificar que é um programa a primeira instrução é 'PRG' 
