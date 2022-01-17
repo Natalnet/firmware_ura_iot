@@ -9,18 +9,23 @@ def sub_cb(topic, msg):
   if len(msg) == 3:
     if topic == topic_sub and msg == b'FRT':
       print('Robô recebeu novo comando, frente')
+      stateController.setCurrentState('FRT')
       robot.passoFrente() 
     elif topic == topic_sub and msg == b'PAR':
       print('Robô recebeu novo comando, parar')
+      stateController.setCurrentState('PAR')
       robot.parar()  
     elif topic == topic_sub and msg == b'ESQ':
       print('Robô recebeu novo comando, esquerda')
+      stateController.setCurrentState('ESQ')
       robot.passoEsquerda()
     elif topic == topic_sub and msg == b'DIR':
       print('Robô recebeu novo comando, direita')
+      stateController.setCurrentState('DIR')
       robot.passoDireita()
     elif topic == topic_sub and msg == b'TRS':
       print('Robô recebeu novo comando, ré')
+      stateController.setCurrentState('TRS')
       robot.passoRe() 
   if len(msg) > 3:
 
@@ -39,19 +44,26 @@ def sub_cb(topic, msg):
       print(comando) 
       if (comando[0] == 'FTT'):
         print('Robô recebeu novo comando, frente por ',int(comando[1]),' ms') 
+        stateController.setCurrentState('FTT')
         robot.passoFrente(int(comando[1]))
       elif (comando[0] == 'EST'):
         print('Robô recebeu novo comando, esquerda por ',int(comando[1]),' ms')
+        stateController.setCurrentState('EST')
         robot.passoEsquerda(int(comando[1]))
       elif (comando[0] == 'DRT'):
         print('Robô recebeu novo comando, direita por ',int(comando[1]),' ms')
+        stateController.setCurrentState('DRT')
         robot.passoDireita(int(comando[1]))
       elif (comando[0] == 'TRT'):
         print('Robô recebeu novo comando, ré por ',int(comando[1]),' ms')
+        stateController.setCurrentState('TRT')
         robot.passoRe(int(comando[1]))
-
-
-
+      elif (comando[0] == 'MTP'):
+        parametro1 = int(comando[1])*10
+        parametro2 = int(comando[2])*10
+        print('Robô recebeu novo comando, controle dos motores, direito para ',parametro1,' e esquerdo para ',parametro2)
+        stateController.setCurrentState('MTP') 
+        robot.motores(parametro1,parametro2) 
 
 
 def connect_and_subscribe():

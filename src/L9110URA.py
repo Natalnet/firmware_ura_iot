@@ -23,6 +23,7 @@ class L9110URA(MotorDC):
         self.motorDireito = MotorDC(pinVelD,pinDirD)
         self.configura(0,0,0,0) # parar
 
+    # ajuste de velocidade positiva ou negativa (ré) dos motores
     def motores(self, velEsq, velDir):
         direcaoDir = 1
         direcaoEsq = 1

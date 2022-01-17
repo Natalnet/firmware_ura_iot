@@ -14,10 +14,10 @@
 * MTP: ajusta a 'potência' para cada motor com valores entre -100 à 100 
 
 ## Programação 
-A programação é realizada com uma sequência de comandos separados por ponto e vírgula ";"
+A programação é realizada com uma sequência de comandos separados por ponto e vírgula ";". Para identificar que é um programa a primeira instrução é 'PRG' 
 
 Por exemplo: 
-* TRS;ESQ;FRT;ESQ;FRT;ESQ;FRT;ESQ;FRT;PAR
+* PRG;TRS;ESQ;FRT;ESQ;FRT;ESQ;FRT;ESQ;FRT;PAR
 
 
 ## Configuração GPIOs 

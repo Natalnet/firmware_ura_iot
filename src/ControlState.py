@@ -58,4 +58,7 @@ class ControlState:
     def getCurrentState(self):
         return self.state
 
+    def setCurrentState(self, _st):
+        self.state = _st 
+
     
