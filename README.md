@@ -48,6 +48,8 @@ Por exemplo:
 
 ## TODO
 
-* Implementar na classe controle de estados uma forma de receber um ou dois parâmentros para os comandos que precisarem 
+* Criar um comando para configurar a velocidade de referência de cada motor. Salvar essas velocidades em um arquivo de configuração  
 * Melhoria: tratar quando vier com espaço antes do nome do comando 
 
+## Concluídas 
+* Implementar na classe controle de estados uma forma de receber um ou dois parâmentros para os comandos que precisarem 
