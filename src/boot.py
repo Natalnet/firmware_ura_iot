@@ -22,10 +22,15 @@ dtTimeConfFile = open('dt_time.json')
 dtTimeConf = json.load(dtTimeConfFile)
 dtTimeConfFile.close() 
 
+arquivoRoboConf = open('robo_conf.json') 
+roboConf = json.load(arquivoRoboConf)
+arquivoRoboConf.close() 
+
 
 # Robot codes 
 from L9110URA import L9110URA
 robot = L9110URA(13,12,5,23)
+robot.setVelocidades(roboConf['ref_vel_esq'], roboConf['ref_vel_dir']) 
 
 from hcsr04 import HCSR04
  

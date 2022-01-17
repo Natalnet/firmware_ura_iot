@@ -23,6 +23,10 @@ class L9110URA(MotorDC):
         self.motorDireito = MotorDC(pinVelD,pinDirD)
         self.configura(0,0,0,0) # parar
 
+    def setVelocidades(self, _ve, _vd):
+        self.velocidadeReferenciaDir = _ve 
+        self.velocidadeReferenciaEsq = _vd  
+
     # ajuste de velocidade positiva ou negativa (ré) dos motores
     def motores(self, velEsq, velDir):
         direcaoDir = 1
@@ -31,10 +35,10 @@ class L9110URA(MotorDC):
         velocidadeDir = self.velocidadeReferenciaDir - velDir 
         if ( velEsq <= 0 ):
             direcaoDir = 0
-            velocidadeEsq = velEsq
+            velocidadeEsq = -velEsq
         if ( velDir <= 0):
             direcaoEsq = 0 
-            velocidadeDir = velDir
+            velocidadeDir = -velDir
         self.configura(direcaoDir,velocidadeEsq,direcaoEsq,velocidadeDir)
 
     # 0 velocidade mínima e 1000 velocidade máxima 
