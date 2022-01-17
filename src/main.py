@@ -37,7 +37,6 @@ def sub_cb(topic, msg):
       #PRG;TRS;ESQ;FRT;ESQ;FRT;ESQ;FRT;ESQ;FRT;PAR 
       print("Execute program!")
       coamandos.pop(0)
-      print(coamandos) 
       stateController.executePrograma(coamandos) 
     else: 
       comando = coamandos[0].split(" ")

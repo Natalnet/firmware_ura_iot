@@ -24,15 +24,7 @@ class ControlState:
         self.instructions = codes
         self.endExecution = False 
         print(self.instructions) 
-
-        if len(self.instructions[0]) == 3:
-            self.initTimer(self.deltaTimeConf[self.instructions[0]], self.instructions[0])
-            self.robotControl.executaComando(self.instructions[0])
-        elif len(self.instructions[0]) > 3:
-            comando = self.instructions[0].split(" ")
-            self.initTimer(int(comando[1]), comando[0]) 
-            self.robotControl.executaComando(comando[0])
-
+        self.analisaEexecutaComando(0)
         self.showState() 
 
     def analisaEexecutaComando(self, indiceCmd):
@@ -43,8 +35,7 @@ class ControlState:
             self.initTimer(self.deltaTimeConf[self.instructions[indiceCmd]], self.instructions[indiceCmd])
             #print("Atualizou: ",self.instructions[indiceCmd])
             self.robotControl.executaComando(self.instructions[indiceCmd])
-            #print( self.deltaTimeConf[self.instructions[indiceCmd]] )
-        ## Comandos com um parâmetro 
+            #print( self.deltaTimeConf[self.instructions[indiceCmd]] )        
         elif len(self.instructions[indiceCmd]) > 3:
             print("Recebeu: ",self.instructions[indiceCmd])
             comando = self.instructions[indiceCmd].split(" ")
@@ -52,9 +43,10 @@ class ControlState:
                 parametro1 = int(comando[1])*10
                 parametro2 = int(comando[2])*10
                 self.initTimer(int(comando[3]), comando[0]) 
-                print('Parametros: ',parametro1,', ',parametro2)
+                print('Parametros: ',parametro1,',',parametro2)
                 print("Tempo: ", int(comando[3]))
                 self.robotControl.motores(parametro1,parametro2) 
+            ## Comandos com um parâmetro 
             else: 
                 self.initTimer(int(comando[1]), comando[0]) 
                 self.robotControl.executaComando(comando[0])
@@ -65,36 +57,12 @@ class ControlState:
         if self.updateTimer() and not self.endExecution : 
             self.instructionIndex += 1 
             if self.instructionIndex < len(self.instructions):
-                # Executa comandos 
-                ## Comandos sem parâmetros                  
-                # Atualiza a instrução atual 
-                if len(self.instructions[self.instructionIndex]) == 3:
-                    self.initTimer(self.deltaTimeConf[self.instructions[self.instructionIndex]], self.instructions[self.instructionIndex])
-                    #print("Atualizou: ",self.instructions[self.instructionIndex])
-                    self.robotControl.executaComando(self.instructions[self.instructionIndex])
-                    #print( self.deltaTimeConf[self.instructions[self.instructionIndex]] )
-                ## Comandos com um parâmetro 
-                elif len(self.instructions[self.instructionIndex]) > 3:
-                    print("Recebeu: ",self.instructions[self.instructionIndex])
-                    comando = self.instructions[self.instructionIndex].split(" ")
-                    if comando[0] == 'MTP':
-                        parametro1 = int(comando[1])*10
-                        parametro2 = int(comando[2])*10
-                        self.initTimer(int(comando[3]), comando[0]) 
-                        print('Parametros: ',parametro1,', ',parametro2)
-                        print("Tempo: ", int(comando[3]))
-                        self.robotControl.motores(parametro1,parametro2) 
-                    else: 
-                        self.initTimer(int(comando[1]), comando[0]) 
-                        self.robotControl.executaComando(comando[0])
-                        print("Tempo: ", int(comando[1]))
-
+                self.analisaEexecutaComando(self.instructionIndex)  
             else:
                 self.instructionIndex = 0 
                 self.state = 'FIM' 
                 self.robotControl.executaComando('PAR')
                 self.endExecution = True  
-
 
     def updateTimer(self): 
         if ( time.ticks_diff(  time.ticks_ms(), self.startTime) < self.deltaTime ):

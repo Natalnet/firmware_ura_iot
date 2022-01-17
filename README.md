@@ -49,4 +49,5 @@ Por exemplo:
 ## TODO
 
 * Implementar na classe controle de estados uma forma de receber um ou dois parâmentros para os comandos que precisarem 
+* Melhoria: tratar quando vier com espaço antes do nome do comando 
 
