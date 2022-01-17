@@ -18,16 +18,28 @@ class L9110URA(MotorDC):
         self.parametro2 = 0 
         self.velocidadeReferenciaDir = 1000 
         self.velocidadeReferenciaEsq = 1000 
-        self.cmdTempoMaximo = 5000 # tempo máximo que um comando deve ser executado 
+        self.cmdTempoMaximo = 5000 # tempo máximo que um comando deve ficar em execução 
         self.motorEsquerdo = MotorDC(pinVelE,pinDirE)
         self.motorDireito = MotorDC(pinVelD,pinDirD)
         self.configura(0,0,0,0) # parar
+
+    def motores(self, velEsq, velDir):
+        direcaoDir = 1
+        direcaoEsq = 1
+        velocidadeEsq = self.velocidadeReferenciaEsq - velEsq 
+        velocidadeDir = self.velocidadeReferenciaDir - velDir 
+        if ( velEsq <= 0 ):
+            direcaoDir = 0
+            velocidadeEsq = velEsq
+        if ( velDir <= 0):
+            direcaoEsq = 0 
+            velocidadeDir = velDir
+        self.configura(direcaoDir,velocidadeEsq,direcaoEsq,velocidadeDir)
 
     # 0 velocidade mínima e 1000 velocidade máxima 
     def frente(self, vel = 1000):
         self.configura(1,self.velocidadeReferenciaEsq - vel,1,self.velocidadeReferenciaDir - vel)
         #print("Frente (",vel,")")
-
 
     # 0 velocidade mínima e 1000 velocidade máxima 
     def re(self, vel = 1000):
