@@ -8,11 +8,11 @@ time.sleep(1)
 robot.frente(700) 
 time.sleep(1)
 robot.re() 
-
+time.sleep(1)
 robot.re(600) 
-
+time.sleep(1)
 robot.parar()
-
+time.sleep(1)
 robot.direita()
-
+time.sleep(1)
 robot.esquerda() 

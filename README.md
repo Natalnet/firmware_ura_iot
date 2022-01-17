@@ -11,6 +11,7 @@
 * EST: vira para esquerda em torno do próprio eixo durante o tempo informado  
 * DRT: vira para direita em torno do próprio eixo durante o tempo informado 
 * TRT: anda para trás durante o tempo informado 
+* MTP: ajusta a 'potência' para cada motor com valores entre -100 à 100 
 
 ## Programação 
 A programação é realizada com uma sequência de comandos separados por ponto e vírgula ";"
@@ -45,4 +46,7 @@ Por exemplo:
 | V+ | 3.3v | 
 | S  | D27 | 
 
+## TODO
+
+* Implementar na classe controle de estados uma forma de receber um ou dois parâmentros para os comandos que precisarem 
 
