@@ -2,7 +2,7 @@ import time
 class ControlState:
     kind = 'ControlState'
     def __init__(self, rb, dtc):
-        print("Control state started!")
+        print("Controle de estado iniciado!")
         self.startTime = 0
         self.deltaTime = 0 
         self.state = 'PAR'

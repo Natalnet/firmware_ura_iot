@@ -1,7 +1,5 @@
 # Reference to MQTT codes: https://RandomNerdTutorials.com
 
-
-
 def sub_cb(topic, msg):
   global topic_sub
   print((topic, msg))

@@ -52,8 +52,8 @@ mqtt_user = conf["mqtt_user"]
 mqtt_password = conf["mqtt_password"]
 
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = b'URA001/input'
-topic_pub = b'URA001/output'
+topic_sub = b'URA003/input'
+topic_pub = b'URA003/output'
 
 last_message = 0
 message_interval = 1
