@@ -6,7 +6,6 @@ class Comportamento:
         self.sensorLinhaEsq = _sensorLinhaEsq
         self.sensorLinhaDir = _sensorLinhaDir 
         self.delta = 60 
-        self.motores.setVelocidades(700,700) 
 
     def seguirLinha(self): 
         time.sleep_ms(self.delta) 

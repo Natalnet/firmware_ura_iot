@@ -43,6 +43,10 @@ class L9110URA(MotorDC):
 
     # 0 velocidade mínima e 1000 velocidade máxima 
     def frente(self, vel = 1000):
+        if vel > self.velocidadeReferenciaEsq:
+            vel = self.velocidadeReferenciaEsq
+        if vel > self.velocidadeReferenciaDir:
+            vel = self.velocidadeReferenciaDir 
         self.configura(1,self.velocidadeReferenciaEsq - vel,1,self.velocidadeReferenciaDir - vel)
         #print("Frente (",vel,")")
 
