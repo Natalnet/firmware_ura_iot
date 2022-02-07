@@ -1,30 +1,33 @@
 # Reference to MQTT codes: https://RandomNerdTutorials.com
 
 def sub_cb(topic, msg):
-  global topic_sub
+  global topic_sub, estadoAtual
   print((topic, msg))
   print(topic_sub)
   if len(msg) == 3:
     if topic == topic_sub and msg == b'FRT':
       print('Robô recebeu novo comando, frente')
-      stateController.setCurrentState('FRT')
       robot.passoFrente() 
+      estadoAtual = 'PAR'
     elif topic == topic_sub and msg == b'PAR':
       print('Robô recebeu novo comando, parar')
-      stateController.setCurrentState('PAR')
+      estadoAtual = 'PAR'
       robot.parar()  
     elif topic == topic_sub and msg == b'ESQ':
       print('Robô recebeu novo comando, esquerda')
-      stateController.setCurrentState('ESQ')
       robot.passoEsquerda()
+      estadoAtual = 'PAR'
     elif topic == topic_sub and msg == b'DIR':
       print('Robô recebeu novo comando, direita')
-      stateController.setCurrentState('DIR')
       robot.passoDireita()
+      estadoAtual = 'PAR'
     elif topic == topic_sub and msg == b'TRS':
       print('Robô recebeu novo comando, ré')
-      stateController.setCurrentState('TRS')
       robot.passoRe() 
+      estadoAtual = 'PAR'
+    elif topic == topic_sub and msg == b'SLN':
+      print('Robô recebeu novo comando, seguir linha')
+      estadoAtual = 'SLN'
   if len(msg) > 3:
 
     # convert to string 
@@ -32,6 +35,7 @@ def sub_cb(topic, msg):
 
     coamandos = dados.split(';')
     if (coamandos[0] == 'PRG'):
+      estadoAtual = 'PRG'
       #PRG;TRS;ESQ;FRT;ESQ;FRT;ESQ;FRT;ESQ;FRT;PAR 
       print("Execute program!")
       coamandos.pop(0)
@@ -41,26 +45,27 @@ def sub_cb(topic, msg):
       print(comando) 
       if (comando[0] == 'FTT'):
         print('Robô recebeu novo comando, frente por ',int(comando[1]),' ms') 
-        stateController.setCurrentState('FTT')
         robot.passoFrente(int(comando[1]))
+        estadoAtual = 'PAR'
       elif (comando[0] == 'EST'):
         print('Robô recebeu novo comando, esquerda por ',int(comando[1]),' ms')
-        stateController.setCurrentState('EST')
         robot.passoEsquerda(int(comando[1]))
+        estadoAtual = 'PAR'
       elif (comando[0] == 'DRT'):
         print('Robô recebeu novo comando, direita por ',int(comando[1]),' ms')
-        stateController.setCurrentState('DRT')
         robot.passoDireita(int(comando[1]))
+        estadoAtual = 'PAR'
       elif (comando[0] == 'TRT'):
         print('Robô recebeu novo comando, ré por ',int(comando[1]),' ms')
-        stateController.setCurrentState('TRT')
         robot.passoRe(int(comando[1]))
+        estadoAtual = 'PAR'
       elif (comando[0] == 'MTP'):
         parametro1 = int(comando[1])*10
         parametro2 = int(comando[2])*10
         print('Robô recebeu novo comando, controle dos motores, direito para ',parametro1,' e esquerdo para ',parametro2)
         stateController.setCurrentState('MTP') 
         robot.motores(parametro1,parametro2) 
+        estadoAtual = 'MTP'
 
 
 def connect_and_subscribe():
@@ -85,17 +90,24 @@ except OSError as e:
 while True:
   try:
     client.check_msg()
-    stateController.updateExecution() 
+    if estadoAtual == 'SLN':
+      #print('seguindo linha!')
+      comportamento.seguirLinha() 
+      #time.sleep(1)
+    else:
+      stateController.updateExecution() 
     if (time.time() - last_message) >= message_interval:
       stateController.showState() 
       distance = distSensor.distance_cm()
       leftValue = leftLineSensor.value()
       rightValue = rightLineSensor.value()
-      currentState = stateController.getCurrentState() 
-      msg = b'MSG %d %d %d %d %s' % (counter,distance,leftValue,rightValue,currentState) 
+      tempState = estadoAtual
+      if estadoAtual == 'PRG':
+        tempState = '%s:%s'%( 'PRG',stateController.getCurrentState()) 
+      msg = b'MSG %d %d %d %d %s' % (contadorGeral,distance,leftValue,rightValue,tempState) 
       client.publish(topic_pub, msg)
       last_message = time.time()
-      counter += 1
+      contadorGeral += 1
   except OSError as e:
     restart_and_reconnect()
 

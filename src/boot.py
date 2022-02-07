@@ -2,6 +2,7 @@
 
 
 # Complete project details at https://RandomNerdTutorials.com
+from Comportamento import Comportamento
 from umqttsimple import MQTTClient
 import ubinascii
 import machine
@@ -32,6 +33,8 @@ from L9110URA import L9110URA
 robot = L9110URA(13,12,5,23)
 robot.setVelocidades(roboConf['ref_vel_esq'], roboConf['ref_vel_dir']) 
 
+estadoAtual = "PAR" 
+
 from hcsr04 import HCSR04
  
 distSensor = HCSR04(trigger_pin=19, echo_pin=18)
@@ -39,6 +42,9 @@ distSensor = HCSR04(trigger_pin=19, echo_pin=18)
 leftLineSensor =  machine.Pin(14, machine.Pin.IN,  machine.Pin.PULL_UP)
 rightLineSensor =  machine.Pin(27, machine.Pin.IN,  machine.Pin.PULL_UP)
 
+# Comportamentos 
+## Seguidor de linha 
+comportamento = Comportamento(robot,leftLineSensor,rightLineSensor)
 
 # Control Robot State 
 from ControlState import ControlState
@@ -52,12 +58,12 @@ mqtt_user = conf["mqtt_user"]
 mqtt_password = conf["mqtt_password"]
 
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = b'URA003/input'
-topic_pub = b'URA003/output'
+topic_sub = b'URA004/input'
+topic_pub = b'URA004/output'
 
 last_message = 0
 message_interval = 1
-counter = 0
+contadorGeral = 0
 
 station = network.WLAN(network.STA_IF)
 
