@@ -12,10 +12,10 @@ class Comportamento:
         valorSLE = self.sensorLinhaEsq.value()
         valroSLD = self.sensorLinhaDir.value()
         if ( not valroSLD and not valorSLE ): 
-            self.motores.frente()
+            self.motores.frente(700)
             #print("Frente!")
         elif (  valroSLD and  valorSLE ):
-            self.motores.re()
+            self.motores.re(700)
             #print("Re!")
         elif ( valorSLE ):
             self.motores.esquerda()
