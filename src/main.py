@@ -87,12 +87,14 @@ try:
 except OSError as e:
   restart_and_reconnect()
 
+contadorGeral = 0
+respostaTerminal = ''
 while True:
   try:
     client.check_msg()
     if estadoAtual == 'SLN':
       #print('seguindo linha!')
-      comportamento.seguirLinha() 
+      respostaTerminal = comportamento.seguirLinha() 
       #time.sleep(1)
     else:
       stateController.updateExecution() 
@@ -106,6 +108,8 @@ while True:
         tempState = '%s:%s'%( 'PRG',stateController.getCurrentState()) 
       msg = b'MSG %d %d %d %d %s' % (contadorGeral,distance,leftValue,rightValue,tempState) 
       client.publish(topic_pub, msg)
+      client.publish("URATESTE",b'%d %s'% (contadorGeral,respostaTerminal))
+      respostaTerminal = ''
       last_message = time.time()
       contadorGeral += 1
   except OSError as e:

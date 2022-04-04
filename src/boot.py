@@ -58,12 +58,12 @@ mqtt_user = conf["mqtt_user"]
 mqtt_password = conf["mqtt_password"]
 
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = b'URA004/input'
-topic_pub = b'URA004/output'
+topic_sub = b'URA002/input'
+topic_pub = b'URA002/output'
 
 last_message = 0
 message_interval = 1
-contadorGeral = 0
+
 
 station = network.WLAN(network.STA_IF)
 
