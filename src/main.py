@@ -1,9 +1,25 @@
 # Reference to MQTT codes: https://RandomNerdTutorials.com
 
+def connect_and_subscribe():
+  global client_id, mqtt_server, topic_sub, server_port, mqtt_user, mqtt_password
+  client = MQTTClient(client_id, mqtt_server, server_port, mqtt_user, mqtt_password)
+  client.set_callback(sub_cb)
+  client.connect()
+  client.subscribe(topic_sub)
+  print('Connected to %s MQTT broker, subscribed to %s topic' % (mqtt_server, topic_sub))
+  return client
+
+def restart_and_reconnect():
+  print('Failed to connect to MQTT broker. Reconnecting...')
+  time.sleep(10)
+  machine.reset()
+
 def sub_cb(topic, msg):
   global topic_sub, estadoAtual
+
   print((topic, msg))
   print(topic_sub)
+  
   if len(msg) == 3:
     if topic == topic_sub and msg == b'FRT':
       print('Robô recebeu novo comando, frente')
@@ -66,21 +82,6 @@ def sub_cb(topic, msg):
         stateController.setCurrentState('MTP') 
         robot.motores(parametro1,parametro2) 
         estadoAtual = 'MTP'
-
-
-def connect_and_subscribe():
-  global client_id, mqtt_server, topic_sub, server_port, mqtt_user, mqtt_password
-  client = MQTTClient(client_id, mqtt_server, server_port, mqtt_user, mqtt_password)
-  client.set_callback(sub_cb)
-  client.connect()
-  client.subscribe(topic_sub)
-  print('Connected to %s MQTT broker, subscribed to %s topic' % (mqtt_server, topic_sub))
-  return client
-
-def restart_and_reconnect():
-  print('Failed to connect to MQTT broker. Reconnecting...')
-  time.sleep(10)
-  machine.reset()
 
 try:
   client = connect_and_subscribe()
