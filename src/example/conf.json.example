@@ -4,5 +4,7 @@
     "mqtt_server": "000.000.000.000",
     "server_port": 1883,
     "mqtt_user": "user",
-    "mqtt_password": "password"
+    "mqtt_password": "password",
+    "topic_sub": "URA001/input",
+    "topic_pub": "URA001/output"
 }
