@@ -58,8 +58,9 @@ mqtt_user = conf["mqtt_user"]
 mqtt_password = conf["mqtt_password"]
 
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = b'URA002/input'
-topic_pub = b'URA002/output'
+
+topic_sub = bytes(conf["topic_sub"], 'utf-8')
+topic_pub = bytes(conf["topic_pub"], 'utf-8')
 
 last_message = 0
 message_interval = 1
@@ -68,13 +69,18 @@ message_interval = 1
 station = network.WLAN(network.STA_IF)
 
 station.active(True)
-station.connect(ssid, password)
 
-while station.isconnected() == False:
-  pass
+if not station.isconnected():
 
-print('Connection successful')
-print(station.ifconfig())
+  print('Connecting to Wi-Fi...')
+
+  station.connect(ssid, password)
+
+  while not station.isconnected():
+    pass
+
+  print('Connected to Wi-Fi: ', station.ifconfig())
+
 
 
 
