@@ -60,6 +60,7 @@ Por exemplo:
 ## TODO
 
 * Criar um comando para configurar a velocidade de referência de cada motor. Salvar essas velocidades em um arquivo de configuração  
+* Implementar uma versão simples para o comando seguir linha 
 * Melhoria: tratar quando vier com espaço antes do nome do comando 
 
 ## Concluídas 
